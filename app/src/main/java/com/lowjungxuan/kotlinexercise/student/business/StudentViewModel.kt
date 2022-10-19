@@ -1,11 +1,10 @@
-package com.lowjungxuan.kotlinexercise.student.presentation
+package com.lowjungxuan.kotlinexercise.student.business
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lowjungxuan.kotlinexercise.student.business.StudentRepository
 import com.lowjungxuan.kotlinexercise.student.data.Student
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,4 +1,4 @@
-package com.lowjungxuan.kotlinexercise.student.presentation
+package com.lowjungxuan.kotlinexercise.student.business
 
 data class StudentCardViewState(
     val id: Int?,

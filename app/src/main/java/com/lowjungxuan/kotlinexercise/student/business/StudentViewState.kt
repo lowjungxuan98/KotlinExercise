@@ -1,4 +1,4 @@
-package com.lowjungxuan.kotlinexercise.student.presentation
+package com.lowjungxuan.kotlinexercise.student.business
 
 sealed class StudentViewState {
     object Loading : StudentViewState()

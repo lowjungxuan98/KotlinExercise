@@ -1,23 +1,22 @@
 package com.lowjungxuan.kotlinexercise.student.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentHomeBinding
+import com.lowjungxuan.kotlinexercise.student.business.StudentViewModel
+import com.lowjungxuan.kotlinexercise.student.business.StudentViewState
 import com.lowjungxuan.kotlinexercise.student.data.Student
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 
 
 @AndroidEntryPoint
@@ -29,8 +28,7 @@ class StudentFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private val viewModel: StudentViewModel by viewModels()
 
-
-    @RequiresApi(Build.VERSION_CODES.N)
+//    private lateinit var rvAdapter: StudentAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -39,10 +37,11 @@ class StudentFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.rvStudent.layoutManager = LinearLayoutManager(requireContext())
+//        binding.rvStudent.adapter =StudentAdapter(listOf(Student(1,"","",1,null,null)))
         viewModel.viewState.observe(viewLifecycleOwner) {
             updateUI(it)
         }
@@ -51,12 +50,12 @@ class StudentFragment : Fragment() {
             writeData()
             hideKeyboard()
         }
-        binding.btnSearchData.setOnClickListener {
-            searchData()
-        }
-        binding.btnDeleteAll.setOnClickListener {
-            viewModel.deleteAll()
-        }
+//        binding.btnSearchData.setOnClickListener {
+//            searchData()
+//        }
+//        binding.btnDeleteAll.setOnClickListener {
+//            viewModel.deleteAll()
+//        }
         binding.btnUpdateData.setOnClickListener {
             updateData()
         }
@@ -65,17 +64,18 @@ class StudentFragment : Fragment() {
     private fun updateUI(viewState: StudentViewState) {
         when (viewState) {
             is StudentViewState.Content -> {
-                binding.scrollView.isVisible = true
+                binding.linearLayoutView.isVisible = true
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
+                binding.rvStudent.adapter = StudentAdapter(viewState.studentList)
             }
             StudentViewState.Error -> {
-                binding.scrollView.isVisible = false
+                binding.linearLayoutView.isVisible = false
                 binding.errorView.isVisible = true
                 binding.loadingView.isVisible = false
             }
             StudentViewState.Loading -> {
-                binding.scrollView.isVisible = false
+                binding.linearLayoutView.isVisible = false
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = true
             }
@@ -116,23 +116,22 @@ class StudentFragment : Fragment() {
         } else mainActivity.showToast("Please enter the data")
     }
 
-    //
-    private fun searchData() {
-        val rollNo = binding.etRollNoRead.text.toString()
-        if (rollNo.isNotEmpty()) {
-            viewModel.searchStudent(rollNo.toInt()).observe(viewLifecycleOwner) {
-                if (it != null) {
-                    lifecycleScope.launch {
-                        displayData(it)
-                    }
-                } else {
-                    lifecycleScope.launch {
-                        mainActivity.showToast("No Data Founded")
-                    }
-                }
-            }
-        } else mainActivity.showToast("Please enter the data")
-    }
+//    private fun searchData() {
+//        val rollNo = binding.etRollNoRead.text.toString()
+//        if (rollNo.isNotEmpty()) {
+//            viewModel.searchStudent(rollNo.toInt()).observe(viewLifecycleOwner) {
+//                if (it != null) {
+//                    lifecycleScope.launch {
+//                        displayData(it)
+//                    }
+//                } else {
+//                    lifecycleScope.launch {
+//                        mainActivity.showToast("No Data Founded")
+//                    }
+//                }
+//            }
+//        } else mainActivity.showToast("Please enter the data")
+//    }
 
     private fun hideKeyboard() {
         val view: View? = requireActivity().currentFocus
@@ -142,13 +141,13 @@ class StudentFragment : Fragment() {
         }
     }
 
-    private suspend fun displayData(student: Student) {
-        withContext(Dispatchers.Main) {
-            binding.tvFirstName.text = student.firstName
-            binding.tvLastName.text = student.lastName
-            binding.tvRollNo.text = student.rollNo.toString()
-        }
-    }
+//    private suspend fun displayData(student: Student) {
+//        withContext(Dispatchers.Main) {
+//            binding.tvFirstName.text = student.firstName
+//            binding.tvLastName.text = student.lastName
+//            binding.tvRollNo.text = student.rollNo.toString()
+//        }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
