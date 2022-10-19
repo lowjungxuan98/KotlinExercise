@@ -10,13 +10,16 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentHomeBinding
+import com.lowjungxuan.kotlinexercise.student.business.StudentCardViewState
 import com.lowjungxuan.kotlinexercise.student.business.StudentViewModel
 import com.lowjungxuan.kotlinexercise.student.business.StudentViewState
 import com.lowjungxuan.kotlinexercise.student.data.Student
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -67,7 +70,8 @@ class StudentFragment : Fragment() {
                 binding.linearLayoutView.isVisible = true
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
-                binding.rvStudent.adapter = StudentAdapter(viewState.studentList)
+                binding.rvStudent.adapter = StudentAdapter(viewState.studentList,             ::onItemClicked,
+                )
             }
             StudentViewState.Error -> {
                 binding.linearLayoutView.isVisible = false
@@ -116,22 +120,25 @@ class StudentFragment : Fragment() {
         } else mainActivity.showToast("Please enter the data")
     }
 
-//    private fun searchData() {
+    private fun onItemClicked(item: StudentCardViewState) {
 //        val rollNo = binding.etRollNoRead.text.toString()
-//        if (rollNo.isNotEmpty()) {
-//            viewModel.searchStudent(rollNo.toInt()).observe(viewLifecycleOwner) {
-//                if (it != null) {
-//                    lifecycleScope.launch {
+        if (item.rollNo != null) {
+            viewModel.searchStudent(item.rollNo).observe(viewLifecycleOwner) {
+                if (it != null) {
+                    lifecycleScope.launch {
 //                        displayData(it)
-//                    }
-//                } else {
-//                    lifecycleScope.launch {
-//                        mainActivity.showToast("No Data Founded")
-//                    }
-//                }
-//            }
-//        } else mainActivity.showToast("Please enter the data")
-//    }
+                        binding.etFirstName.setText(it.firstName)
+                        binding.etLastName.setText(it.lastName)
+                        binding.etId.setText(it.rollNo.toString())
+                    }
+                } else {
+                    lifecycleScope.launch {
+                        mainActivity.showToast("No Data Founded")
+                    }
+                }
+            }
+        } else mainActivity.showToast("Please enter the data")
+    }
 
     private fun hideKeyboard() {
         val view: View? = requireActivity().currentFocus

@@ -6,7 +6,6 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface StudentEndpoint {
-    //    https://stackoverflow.com/questions/58567053/how-to-add-url-parameter-in-a-retrofit-get-request-in-kotlin
     @GET("student/")
     suspend fun findAll(): List<Student>
 

@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lowjungxuan.kotlinexercise.databinding.RvStudentListItemBinding
 import com.lowjungxuan.kotlinexercise.student.business.StudentCardViewState
 
-class StudentAdapter(private val studentList: List<StudentCardViewState>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+class StudentAdapter(
+    private val studentList: List<StudentCardViewState>,
+    val onItemClicked: (StudentCardViewState) -> Unit
+) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val binding = RvStudentListItemBinding
@@ -22,6 +25,9 @@ class StudentAdapter(private val studentList: List<StudentCardViewState>) : Recy
                 binding.firstName.text = firstName
                 binding.lastName.text = lastName
                 binding.rollNo.text = rollNo.toString()
+                binding.studentCard.setOnClickListener {
+                    onItemClicked(studentList[position])
+                }
 //                binding.topLearnerName.text = name
 //                val hours = "$hours learning hours, $country"
 //                binding.topLearnerTime.text = hours
