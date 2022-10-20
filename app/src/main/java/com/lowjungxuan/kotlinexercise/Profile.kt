@@ -18,8 +18,7 @@ class Profile : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         binding.buttonCheck.setOnClickListener{
             if (checkForInternet(requireContext())) {
