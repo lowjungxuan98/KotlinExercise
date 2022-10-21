@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+const socket = require('socket.io'); //requires socket.io module
 const app = express();
 
 var corsOptions = {
@@ -15,16 +15,6 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("./app/models");
-
-db.sequelize.sync()
-    .then(() => {
-        console.log("Synced db.");
-    })
-    .catch((err) => {
-        console.log("Failed to sync db: " + err.message);
-    });
-
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to bezkoder application." });
@@ -34,7 +24,7 @@ require("./app/routes/student.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 // sequelize-auto -o "./auto" -d kotlin_exercise -h localhost -u root -p 3306 -x gnn12345 -e mysql

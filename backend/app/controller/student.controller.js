@@ -1,6 +1,6 @@
-const db = require("../models");
-const Student = db.student;
-const Op = db.Sequelize.Op;
+const { sequelize, DataTypes } = require('../config');
+const Student = require("../auto/student_tables")(sequelize, DataTypes);
+const Op = sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
