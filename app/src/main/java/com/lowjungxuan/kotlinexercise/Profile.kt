@@ -27,14 +27,6 @@ class Profile : Fragment() {
             mSocket.emit("counter", jsonString)
         }
 
-//        mSocket.on("counter") { args ->
-//            if (args[0] != null) {
-//                val counter = args[0] as Int
-//                requireActivity().runOnUiThread {
-//                    binding.countTextView.text = counter.toString()
-//                }
-//            }
-//        }
         mSocket.on("counter") {
             if (it[0] != null) {
                 val testModel = Gson().fromJson(it[0].toString(), Test::class.java)

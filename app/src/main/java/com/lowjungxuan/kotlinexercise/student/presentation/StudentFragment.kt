@@ -31,7 +31,7 @@ class StudentFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private val viewModel: StudentViewModel by viewModels()
 
-//    private lateinit var rvAdapter: StudentAdapter
+    //    private lateinit var rvAdapter: StudentAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -70,7 +70,8 @@ class StudentFragment : Fragment() {
                 binding.linearLayoutView.isVisible = true
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
-                binding.rvStudent.adapter = StudentAdapter(viewState.studentList,             ::onItemClicked,
+                binding.rvStudent.adapter = StudentAdapter(
+                    viewState.studentList, ::onItemClicked,
                 )
             }
             StudentViewState.Error -> {
