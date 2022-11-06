@@ -84,13 +84,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+          message: `Cannot update Tutorial with id=${roll_no}. Maybe Tutorial was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: "Error updating Tutorial with id=" + roll_no
       });
     });
 };
