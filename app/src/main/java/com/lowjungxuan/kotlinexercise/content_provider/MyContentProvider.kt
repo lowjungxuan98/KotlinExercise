@@ -11,13 +11,13 @@ import android.net.Uri
 class MyContentProvider : ContentProvider() {
     companion object {
         // defining authority so that other application can access it
-        const val PROVIDER_NAME = "com.kotlin_exercise.user.provider"
+        private const val PROVIDER_NAME = "com.kotlin_exercise.user.provider"
 
         // defining content URI
-        const val URL = "content://$PROVIDER_NAME/users"
+        private const val URL = "content://$PROVIDER_NAME/users"
 
         // parsing the content URI
-        val CONTENT_URI = Uri.parse(URL)
+        val CONTENT_URI = Uri.parse(URL)!!
         const val id = "id"
         const val name = "name"
         const val uriCode = 1
@@ -62,7 +62,7 @@ class MyContentProvider : ContentProvider() {
         }
     }
 
-    override fun getType(uri: Uri): String? {
+    override fun getType(uri: Uri): String {
         return when (uriMatcher!!.match(uri)) {
             uriCode -> "vnd.android.cursor.dir/users"
             else -> throw IllegalArgumentException("Unsupported URI: $uri")
@@ -101,11 +101,10 @@ class MyContentProvider : ContentProvider() {
     }
 
     // adding data to the database
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+    override fun insert(uri: Uri, values: ContentValues?): Uri {
         val rowID = db!!.insert(TABLE_NAME, "", values)
         if (rowID > 0) {
-            val _uri =
-                ContentUris.withAppendedId(CONTENT_URI, rowID)
+            val _uri = ContentUris.withAppendedId(CONTENT_URI, rowID)
             context!!.contentResolver.notifyChange(_uri, null)
             return _uri
         }
@@ -116,8 +115,7 @@ class MyContentProvider : ContentProvider() {
         uri: Uri, values: ContentValues?, selection: String?,
         selectionArgs: Array<String>?
     ): Int {
-        var count = 0
-        count = when (uriMatcher!!.match(uri)) {
+        val count: Int = when (uriMatcher!!.match(uri)) {
             uriCode -> db!!.update(TABLE_NAME, values, selection, selectionArgs)
             else -> throw IllegalArgumentException("Unknown URI $uri")
         }
@@ -130,8 +128,7 @@ class MyContentProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<String>?
     ): Int {
-        var count = 0
-        count = when (uriMatcher!!.match(uri)) {
+        val count: Int = when (uriMatcher!!.match(uri)) {
             uriCode -> db!!.delete(TABLE_NAME, selection, selectionArgs)
             else -> throw IllegalArgumentException("Unknown URI $uri")
         }
