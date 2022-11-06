@@ -1,15 +1,6 @@
-// const db = require("../models");
-// const Tutorial = db.tutorials;
-// const Op = db.Sequelize.Op;
-
-// const { sequelize, DataTypes } = require('../config/db.config');
-// const sequelize = require("sequelize")
-// const initModels = require("../auto/init-models");//(sequelize, DataTypes);
-// const models = initModels(sequelize)
-// const Tutorial = models.student_tables
-// const Op = sequelize.Op;
-const { sequelize, DataTypes } = require('../config');
-const Tutorial = require('../../auto/student_tables')(sequelize, DataTypes)
+const { sequelize, DataTypes, instance } = require('../config');
+const Student = require('../../auto/student_tables')(sequelize, DataTypes)
+const MySQLEvents = require('@rodrigogs/mysql-events');
 
 
 // Create and Save a new Tutorial

@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
+const socket = require('socket.io');
 const app = express();
+const PORT = process.env.PORT || 3000;
+// const realTime = require("./app/controllers/realtime.controller");
 
 var corsOptions = {
     origin: "http://localhost:8081"
@@ -18,7 +21,23 @@ app.get("/", (req, res) => {
 
 require("./app/routes/student.routes")(app);
 
-const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
+
+app.use(express.static('public'));
+const io = socket(server);
+// const { createOrder, readOrder } = require("./orderHandler")(io);
+// const onConnection = (socket) => {
+//     socket.on("order:create", createOrder);
+//     socket.on("order:read", readOrder);
+// }
+const { realtime } = require("./app/controllers/realtime.controller")(io);
+const onConnection = (socket)=>{
+    socket.on("data", realtime);
+}
+io.on("connection", onConnection);
+
+realtime()
+    .then(() => console.log('Waiting for database events...'))
+    .catch(console.error);

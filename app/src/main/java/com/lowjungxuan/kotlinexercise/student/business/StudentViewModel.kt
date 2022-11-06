@@ -24,7 +24,7 @@ class StudentViewModel @Inject constructor(
     fun loadStudentList() {
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(StudentViewState.Loading)
-w
+
             val studentList = repository.getStudentList()
             _viewState.postValue(
                 StudentViewState.Content(

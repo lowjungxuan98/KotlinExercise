@@ -1,5 +1,7 @@
 const dbConfig = require('./db.config.js');
 const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
+const MySQLEvents = require('@rodrigogs/mysql-events');
+const mysql = require('mysql');
 
 const sequelize = new Sequelize(
     dbConfig.database,
@@ -45,8 +47,21 @@ sequelize.authenticate()
         console.log('Error' + err)
     })
 
-
+const instance = new MySQLEvents(mysql.createConnection({
+    host: dbConfig.host,
+    user: dbConfig.username,
+    password: dbConfig.password,
+    // database: dbConfig.database,
+    // dialect: dbConfig.dialect,
+    // port: 3306
+}), {
+    startAtEnd: true,
+    excludedSchemas: {
+        mysql: true,
+    },
+});
 module.exports = {
     sequelize,
-    DataTypes
+    DataTypes,
+    instance
 }
