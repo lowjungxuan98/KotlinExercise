@@ -20,7 +20,14 @@ npm i
 Setup the Database
 ```
 USE kotlin_exercise; # selected the database that want to use
-CREATE TABLE IF NOT EXISTS `student_tables` (`id` INTEGER NOT NULL auto_increment , `first_name` VARCHAR(255), `last_name` VARCHAR(255), `roll_no` INTEGER, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS `student_tables` (
+    `id` INTEGER NOT NULL auto_increment , 
+    `first_name` VARCHAR(255), 
+    `last_name` VARCHAR(255), 
+    `roll_no` INTEGER, 
+    `createdAt` DATETIME NOT NULL, 
+    `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
 ```
 
 ## Configuration <a name = "Configuration"></a>
