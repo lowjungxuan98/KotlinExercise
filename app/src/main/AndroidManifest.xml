@@ -16,6 +16,10 @@
         android:theme="@style/Theme.KotlinExercise"
         tools:targetApi="31">
         <service android:name=".service.NewService" />
+        <provider
+            android:authorities="com.kotlin_exercise.user.provider"
+            android:enabled="true"
+            android:name=".content_provider.MyContentProvider"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
