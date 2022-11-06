@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lowjungxuan.kotlinexercise.databinding.RvStudentListItemBinding
 import com.lowjungxuan.kotlinexercise.student.business.StudentCardViewState
+import com.lowjungxuan.kotlinexercise.student.data.Student
 
 class StudentAdapter(
-    private val studentList: List<StudentCardViewState>,
-    val onItemClicked: (StudentCardViewState) -> Unit
+    private val studentList: List<Student>,
+    val onItemClicked: (Student) -> Unit
 ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {

@@ -14,7 +14,7 @@ module.exports = (io, socket) => {
                 console.log("Waiting data incoming...")
                 Student.findAll({ raw: true })
                     .then(data => {
-                        io.emit('data', data);
+                        io.emit('data', { data: data });
                         console.log(data);
                     })
                     .catch(err => {

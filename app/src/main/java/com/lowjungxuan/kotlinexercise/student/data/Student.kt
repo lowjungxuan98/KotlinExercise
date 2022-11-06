@@ -23,3 +23,7 @@ data class Student(
     @SerializedName("updatedAt")
     var updatedAt: String? = null
 )
+data class StudentList (
+    @SerializedName("data")
+    var data: List<Student>? = null,
+)

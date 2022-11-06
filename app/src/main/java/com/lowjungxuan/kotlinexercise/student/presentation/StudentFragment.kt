@@ -12,12 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentHomeBinding
 import com.lowjungxuan.kotlinexercise.student.business.StudentCardViewState
 import com.lowjungxuan.kotlinexercise.student.business.StudentViewModel
 import com.lowjungxuan.kotlinexercise.student.business.StudentViewState
 import com.lowjungxuan.kotlinexercise.student.data.Student
+import com.lowjungxuan.kotlinexercise.student.data.StudentList
+import com.lowjungxuan.kotlinexercise.utils.SocketHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -62,6 +65,21 @@ class StudentFragment : Fragment() {
         binding.btnUpdateData.setOnClickListener {
             updateData()
         }
+
+        SocketHandler.setSocket()
+        SocketHandler.establishConnection()
+        val mSocket = SocketHandler.getSocket()
+        mSocket.on("data") {
+            if (it[0] != null) {
+                requireActivity().runOnUiThread {
+                    val studentList = Gson().fromJson(it[0].toString(), StudentList::class.java)
+
+                    binding.rvStudent.adapter = StudentAdapter(
+                        studentList.data!!, ::onItemClicked,
+                    )
+                }
+            }
+        }
     }
 
     private fun updateUI(viewState: StudentViewState) {
@@ -70,9 +88,9 @@ class StudentFragment : Fragment() {
                 binding.linearLayoutView.isVisible = true
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
-                binding.rvStudent.adapter = StudentAdapter(
-                    viewState.studentList, ::onItemClicked,
-                )
+//                binding.rvStudent.adapter = StudentAdapter(
+//                    viewState.studentList, ::onItemClicked,
+//                )
             }
             StudentViewState.Error -> {
                 binding.linearLayoutView.isVisible = false
@@ -121,10 +139,10 @@ class StudentFragment : Fragment() {
         } else mainActivity.showToast("Please enter the data")
     }
 
-    private fun onItemClicked(item: StudentCardViewState) {
+    private fun onItemClicked(item: Student) {
 //        val rollNo = binding.etRollNoRead.text.toString()
         if (item.rollNo != null) {
-            viewModel.searchStudent(item.rollNo).observe(viewLifecycleOwner) {
+            viewModel.searchStudent(item.rollNo!!).observe(viewLifecycleOwner) {
                 if (it != null) {
                     lifecycleScope.launch {
 //                        displayData(it)
