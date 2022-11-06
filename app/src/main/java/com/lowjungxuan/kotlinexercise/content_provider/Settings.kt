@@ -1,10 +1,11 @@
-package com.lowjungxuan.kotlinexercise
+package com.lowjungxuan.kotlinexercise.content_provider
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.lowjungxuan.kotlinexercise.R
 
 class Settings : Fragment() {
 

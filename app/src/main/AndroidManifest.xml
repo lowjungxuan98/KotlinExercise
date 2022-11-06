@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinExercise"
         tools:targetApi="31">
+        <service android:name=".service.NewService" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

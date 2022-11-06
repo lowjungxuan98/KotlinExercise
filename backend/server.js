@@ -32,12 +32,12 @@ const io = socket(server);
 //     socket.on("order:create", createOrder);
 //     socket.on("order:read", readOrder);
 // }
-const { realtime } = require("./app/controllers/realtime.controller")(io);
+const { findAll } = require("./app/controllers/realtime.controller")(io);
 const onConnection = (socket)=>{
-    socket.on("data", realtime);
+    socket.on("student:findAll", findAll);
 }
 io.on("connection", onConnection);
 
-realtime()
+findAll()
     .then(() => console.log('Waiting for database events...'))
     .catch(console.error);

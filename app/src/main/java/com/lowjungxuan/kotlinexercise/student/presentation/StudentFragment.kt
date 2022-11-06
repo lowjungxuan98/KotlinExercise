@@ -65,21 +65,6 @@ class StudentFragment : Fragment() {
         binding.btnUpdateData.setOnClickListener {
             updateData()
         }
-
-        SocketHandler.setSocket()
-        SocketHandler.establishConnection()
-        val mSocket = SocketHandler.getSocket()
-        mSocket.on("data") {
-            if (it[0] != null) {
-                requireActivity().runOnUiThread {
-                    val studentList = Gson().fromJson(it[0].toString(), StudentList::class.java)
-
-                    binding.rvStudent.adapter = StudentAdapter(
-                        studentList.data!!, ::onItemClicked,
-                    )
-                }
-            }
-        }
     }
 
     private fun updateUI(viewState: StudentViewState) {
@@ -88,9 +73,9 @@ class StudentFragment : Fragment() {
                 binding.linearLayoutView.isVisible = true
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
-//                binding.rvStudent.adapter = StudentAdapter(
-//                    viewState.studentList, ::onItemClicked,
-//                )
+                binding.rvStudent.adapter = StudentAdapter(
+                    viewState.studentList, ::onItemClicked,
+                )
             }
             StudentViewState.Error -> {
                 binding.linearLayoutView.isVisible = false
@@ -139,7 +124,7 @@ class StudentFragment : Fragment() {
         } else mainActivity.showToast("Please enter the data")
     }
 
-    private fun onItemClicked(item: Student) {
+    private fun onItemClicked(item: StudentCardViewState) {
 //        val rollNo = binding.etRollNoRead.text.toString()
         if (item.rollNo != null) {
             viewModel.searchStudent(item.rollNo!!).observe(viewLifecycleOwner) {

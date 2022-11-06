@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.lowjungxuan.kotlinexercise.student.data.Student
+import com.lowjungxuan.kotlinexercise.student.data.StudentList
 import com.lowjungxuan.kotlinexercise.utils.SocketHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,20 +28,44 @@ class StudentViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(StudentViewState.Loading)
 
-            val studentList = repository.getStudentList()
-            _viewState.postValue(
-                StudentViewState.Content(
-                    studentList.map {
-                        StudentCardViewState(
-                            it.id,
-                            it.firstName,
-                            it.lastName,
-                            it.rollNo
+            try {
+//                val studentList = repository.getStudentList()
+//                _viewState.postValue(
+//                    StudentViewState.Content(
+//                        studentList.map {
+//                            StudentCardViewState(
+//                                it.id,
+//                                it.firstName,
+//                                it.lastName,
+//                                it.rollNo
+//                            )
+//                        }
+//                    )
+//                )
+                val mSocket = SocketHandler.getSocket()
+                mSocket.emit("student:findAll","initialize")
+                mSocket.on("student:findAll") {socketIOResponse->
+                    if (socketIOResponse[0] != null) {
+                        Log.e("view model socket io", socketIOResponse.toString())
+                        val studentList = Gson().fromJson(socketIOResponse[0].toString(), StudentList::class.java).data!!
+                        _viewState.postValue(
+                            StudentViewState.Content(
+                                studentList.map {
+                                    StudentCardViewState(
+                                        it.id,
+                                        it.firstName,
+                                        it.lastName,
+                                        it.rollNo
+                                    )
+                                }
+                            )
                         )
                     }
-                )
-            )
-            Log.e(">>>", studentList.toString())
+                }
+            } catch (e: Exception) {
+                _viewState.postValue(StudentViewState.Error)
+                Log.e("Error", e.toString())
+            }
         }
     }
 
@@ -51,7 +77,7 @@ class StudentViewModel @Inject constructor(
         }
     }
 
-    fun updateStudent(firstName: String, lastName: String, id: Int){
+    fun updateStudent(firstName: String, lastName: String, id: Int) {
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(StudentViewState.Loading)
             repository.updateStudent(firstName, lastName, id)
@@ -59,16 +85,17 @@ class StudentViewModel @Inject constructor(
         }
     }
 
-    fun deleteAll(){
-        viewModelScope.launch(dispatcher){
+    fun deleteAll() {
+        viewModelScope.launch(dispatcher) {
             _viewState.postValue(StudentViewState.Loading)
             repository.deleteAll()
             loadStudentList()
         }
     }
-    fun searchStudent(id: Int):MutableLiveData<Student?>{
+
+    fun searchStudent(id: Int): MutableLiveData<Student?> {
         val result = MutableLiveData<Student?>()
-        viewModelScope.launch(dispatcher){
+        viewModelScope.launch(dispatcher) {
             _viewState.postValue(StudentViewState.Loading)
             result.postValue(repository.searchStudent(id))
             loadStudentList()
