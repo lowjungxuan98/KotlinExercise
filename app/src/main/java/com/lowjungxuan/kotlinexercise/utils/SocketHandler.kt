@@ -1,5 +1,6 @@
 package com.lowjungxuan.kotlinexercise.utils
 
+import com.lowjungxuan.kotlinexercise.BuildConfig
 import io.socket.client.IO
 import io.socket.client.Socket
 import java.net.URISyntaxException
@@ -10,7 +11,7 @@ object SocketHandler {
     @Synchronized
     fun setSocket() {
         try {
-            mSocket = IO.socket("http://10.0.2.2:3000")
+            mSocket = IO.socket(BuildConfig.BASE_URL)
         } catch (_: URISyntaxException) {
 
         }
