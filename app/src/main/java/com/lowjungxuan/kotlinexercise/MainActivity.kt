@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.broadcast_receiver.MyBroadcastReceiver
 import com.lowjungxuan.kotlinexercise.content_provider.ContentProviderFragment
 import com.lowjungxuan.kotlinexercise.databinding.ActivityMainBinding
+import com.lowjungxuan.kotlinexercise.implicit_intent.ImplicitIntentFragment
 import com.lowjungxuan.kotlinexercise.service.ServiceFragment
 import com.lowjungxuan.kotlinexercise.student.presentation.StudentFragment
 import com.lowjungxuan.kotlinexercise.utils.SocketHandler
@@ -28,12 +29,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        this.supportActionBar.title
+        title = Build.BRAND
         replaceFragment(StudentFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(StudentFragment())
-                R.id.profile -> replaceFragment(ServiceFragment())
-                R.id.settings -> replaceFragment(ContentProviderFragment())
+                R.id.provider -> replaceFragment(ServiceFragment())
+                R.id.content_provider -> replaceFragment(ContentProviderFragment())
+                R.id.implicit_intent -> replaceFragment(ImplicitIntentFragment())
                 else -> {
 
                 }
@@ -98,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         // since AirplaneModeChangeReceiver class holds a instance of Context
         // and that context is actually the activity context in which
         // the receiver has been created
-        unregisterReceiver(receiver)
+//        unregisterReceiver(receiver)
         Log.e("activity life cycle", "onStop")
     }
 

@@ -6,11 +6,16 @@
         android:icon="@drawable/ic_baseline_storage_24"
         android:title="Room" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/provider"
         android:icon="@drawable/ic_round_electrical_services_24"
         android:title="Service" />
     <item
-        android:id="@+id/settings"
+        android:id="@+id/content_provider"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="Content Provider" />
+
+    <item
+        android:id="@+id/implicit_intent"
+        android:icon="@drawable/ic_baseline_language_24"
+        android:title="Intent Implicit"/>
 </menu>
