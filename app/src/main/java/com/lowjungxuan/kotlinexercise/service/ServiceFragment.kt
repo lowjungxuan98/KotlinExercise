@@ -1,5 +1,6 @@
 package com.lowjungxuan.kotlinexercise.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentServiceBinding
-
+@SuppressLint("LongLogTag")
 class ServiceFragment : Fragment() {
     private var _binding: FragmentServiceBinding? = null
     private val binding get() = _binding!!

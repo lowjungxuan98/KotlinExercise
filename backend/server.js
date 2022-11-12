@@ -33,7 +33,7 @@ const io = socket(server);
 //     socket.on("order:read", readOrder);
 // }
 const { findAll } = require("./app/controllers/realtime.controller")(io);
-const onConnection = (socket)=>{
+const onConnection = (socket) => {
     socket.on("student:findAll", findAll);
 }
 io.on("connection", onConnection);

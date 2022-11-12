@@ -38,7 +38,7 @@ const sequelize = new Sequelize(
         // timezone: '+08:00'
     }
 )
-sequelize.sync({force:true})
+sequelize.sync({ force: false })
 sequelize.authenticate()
     .then(() => {
         console.log('connected..')
