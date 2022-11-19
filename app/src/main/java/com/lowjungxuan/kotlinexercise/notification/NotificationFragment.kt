@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.R
 import com.lowjungxuan.kotlinexercise.databinding.FragmentNotificationBinding
+import com.lowjungxuan.mylibrary.BlinkEffect
 
 class NotificationFragment : Fragment() {
     private var _binding: FragmentNotificationBinding? = null
@@ -45,6 +46,7 @@ class NotificationFragment : Fragment() {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         mainActivity = (activity as MainActivity)
         binding.btnNotification.setOnClickListener {
+            BlinkEffect.blink(binding.btnNotification)
             if (ContextCompat.checkSelfPermission(
                     mainActivity.applicationContext,
                     Manifest.permission.POST_NOTIFICATIONS,

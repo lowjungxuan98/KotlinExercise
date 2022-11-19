@@ -85,6 +85,8 @@ dependencies {
     implementation ('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+
+    implementation 'com.github.lowjungxuan98:BlinkEffect-library:0.1.0'
 }
 kapt {
     correctErrorTypes = true
