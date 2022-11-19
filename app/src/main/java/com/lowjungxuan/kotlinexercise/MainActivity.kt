@@ -14,6 +14,7 @@ import com.lowjungxuan.kotlinexercise.broadcast_receiver.MyBroadcastReceiver
 import com.lowjungxuan.kotlinexercise.content_provider.ContentProviderFragment
 import com.lowjungxuan.kotlinexercise.databinding.ActivityMainBinding
 import com.lowjungxuan.kotlinexercise.implicit_intent.ImplicitIntentFragment
+import com.lowjungxuan.kotlinexercise.notification.NotificationFragment
 import com.lowjungxuan.kotlinexercise.service.ServiceFragment
 import com.lowjungxuan.kotlinexercise.student.presentation.StudentFragment
 import com.lowjungxuan.kotlinexercise.utils.SocketHandler
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.provider -> replaceFragment(ServiceFragment())
                 R.id.content_provider -> replaceFragment(ContentProviderFragment())
                 R.id.implicit_intent -> replaceFragment(ImplicitIntentFragment())
+                R.id.notification -> replaceFragment(NotificationFragment())
                 else -> {
 
                 }
