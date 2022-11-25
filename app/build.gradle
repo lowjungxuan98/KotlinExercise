@@ -87,6 +87,9 @@ dependencies {
     }
 
     implementation 'com.github.lowjungxuan98:BlinkEffect-library:0.1.0'
+    // Navigation Component
+    implementation('androidx.navigation:navigation-fragment-ktx:2.5.3')
+    implementation('androidx.navigation:navigation-ui-ktx:2.5.3')
 }
 kapt {
     correctErrorTypes = true

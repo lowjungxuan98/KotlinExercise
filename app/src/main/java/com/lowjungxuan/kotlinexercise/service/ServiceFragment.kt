@@ -11,11 +11,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentServiceBinding
+import com.lowjungxuan.kotlinexercise.drawer.DrawerActivity
+
 @SuppressLint("LongLogTag")
 class ServiceFragment : Fragment() {
     private var _binding: FragmentServiceBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mainActivity: MainActivity
+    private lateinit var mainActivity: DrawerActivity
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.e("service fragment life cycle", "onAttach")
@@ -27,7 +29,7 @@ class ServiceFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentServiceBinding.inflate(inflater, container, false)
-        mainActivity = (activity as MainActivity)
+        mainActivity = (activity as DrawerActivity)
         binding.startButton.setOnClickListener {
             mainActivity.startService(Intent(requireContext(), NewService::class.java))
         }

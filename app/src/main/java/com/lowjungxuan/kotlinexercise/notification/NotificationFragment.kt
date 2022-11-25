@@ -23,13 +23,14 @@ import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.R
 import com.lowjungxuan.kotlinexercise.databinding.FragmentNotificationBinding
+import com.lowjungxuan.kotlinexercise.drawer.DrawerActivity
 import com.lowjungxuan.mylibrary.BlinkEffect
 
 class NotificationFragment : Fragment() {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private lateinit var mainActivity: MainActivity
+    private lateinit var mainActivity: DrawerActivity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,7 +45,7 @@ class NotificationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
-        mainActivity = (activity as MainActivity)
+        mainActivity = (activity as DrawerActivity)
         binding.btnNotification.setOnClickListener {
             BlinkEffect.blink(binding.btnNotification)
             if (ContextCompat.checkSelfPermission(

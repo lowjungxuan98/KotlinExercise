@@ -14,7 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.lowjungxuan.kotlinexercise.MainActivity
-import com.lowjungxuan.kotlinexercise.databinding.FragmentHomeBinding
+import com.lowjungxuan.kotlinexercise.databinding.FragmentStudentBinding
+import com.lowjungxuan.kotlinexercise.drawer.DrawerActivity
 import com.lowjungxuan.kotlinexercise.student.business.StudentCardViewState
 import com.lowjungxuan.kotlinexercise.student.business.StudentViewModel
 import com.lowjungxuan.kotlinexercise.student.business.StudentViewState
@@ -28,18 +29,18 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class StudentFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentStudentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mainActivity: MainActivity
+    private lateinit var mainActivity: DrawerActivity
     private val viewModel: StudentViewModel by viewModels()
 
     //    private lateinit var rvAdapter: StudentAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        mainActivity = (activity as MainActivity)
+        _binding = FragmentStudentBinding.inflate(inflater, container, false)
+        mainActivity = (activity as DrawerActivity)
         return binding.root
     }
 

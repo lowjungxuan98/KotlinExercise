@@ -11,19 +11,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentContentProviderBinding
+import com.lowjungxuan.kotlinexercise.drawer.DrawerActivity
 
 class ContentProviderFragment : Fragment() {
 
     private var _binding: FragmentContentProviderBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mainActivity: MainActivity
+    private lateinit var mainActivity: DrawerActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentContentProviderBinding.inflate(inflater, container, false)
-        mainActivity = (activity as MainActivity)
+        mainActivity = (activity as DrawerActivity)
         binding.insertButton.setOnClickListener {
             onClickAddDetails()
         }

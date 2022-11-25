@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:name=".KotlinExerciseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,14 +16,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinExercise"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".drawer.DrawerActivity"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
+
         <service android:name=".service.NewService" />
+
         <provider
+            android:name=".content_provider.MyContentProvider"
             android:authorities="com.kotlin_exercise.user.provider"
-            android:enabled="true"
-            android:name=".content_provider.MyContentProvider"/>
+            android:enabled="true" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".drawer.DrawerActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

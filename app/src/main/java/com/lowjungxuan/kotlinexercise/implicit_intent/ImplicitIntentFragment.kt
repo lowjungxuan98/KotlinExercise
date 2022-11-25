@@ -9,16 +9,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lowjungxuan.kotlinexercise.MainActivity
 import com.lowjungxuan.kotlinexercise.databinding.FragmentImplicitIntentBinding
+import com.lowjungxuan.kotlinexercise.drawer.DrawerActivity
 
 
 class ImplicitIntentFragment : Fragment() {
     private var _binding: FragmentImplicitIntentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mainActivity: MainActivity
+    private lateinit var mainActivity: DrawerActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentImplicitIntentBinding.inflate(inflater, container, false)
-        mainActivity = (activity as MainActivity)
+        mainActivity = (activity as DrawerActivity)
         binding.btnActionView.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse("https://github.com/lowjungxuan98/KotlinExercise")

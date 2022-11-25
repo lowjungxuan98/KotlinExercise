@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var receiver: BroadcastReceiver
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -63,8 +62,8 @@ class MainActivity : AppCompatActivity() {
             // is the intent filter that we have just created
             registerReceiver(receiver, it)
         }
-        SocketHandler.setSocket()
-        SocketHandler.establishConnection()
+//        SocketHandler.setSocket()
+//        SocketHandler.establishConnection()
     }
 
     private fun replaceFragment(fragment: Fragment) {
